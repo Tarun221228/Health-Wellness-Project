@@ -1,0 +1,2214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health & Wellness</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4CAF50;         /* Green */
+            --primary-dark: #388E3C;    /* Dark Green */
+            --secondary: #8BC34A;       /* Light Green */
+            --accent: #FFC107;          /* Amber for accents */
+            --light: #f5f5dc;           /* Beige */
+            --dark: #333333;            /* Dark Gray for text */
+            --success: #4CAF50;         /* Green */
+            --warning: #FFC107;         /* Amber */
+            --danger: #F44336;          /* Red */
+            --gray: #9E9E9E;            /* Gray */
+            --light-gray: #F5F5F5;      /* Light Gray */
+            --text-dark: #333333;       /* Dark text */
+            --text-light: #757575;      /* Light text */
+            --card-bg: #ffffff;         /* White for cards */
+            --section-bg: #f5f5dc;      /* Beige for sections */
+        }
+        /* ===== ADD THESE STYLES TO EXISTING CSS ===== */
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-20px); }
+    60% { transform: translateY(-10px); }
+}
+
+.animated {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+}
+
+.fadeIn {
+    animation-name: fadeIn;
+}
+
+.pulse {
+    animation-name: pulse;
+}
+
+.bounce {
+    animation-name: bounce;
+}
+
+.result-icon {
+    animation: bounce 1s infinite;
+    color: var(--success);
+}
+
+.delay-1 {
+    animation-delay: 0.3s;
+}
+
+.delay-2 {
+    animation-delay: 0.6s;
+}
+
+.delay-3 {
+    animation-delay: 0.9s;
+}
+
+/* Dashboard improvements */
+.dashboard-section {
+    margin-bottom: 2.5rem;
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.chart-container {
+    height: 300px;
+    position: relative;
+}
+
+.predictions-list {
+    display: grid;
+    gap: 1rem;
+}
+
+.prediction-item {
+    background: var(--light-gray);
+    padding: 1rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--primary);
+}
+
+.history-container {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.history-item {
+    padding: 1rem;
+    border-bottom: 1px solid var(--light-gray);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.history-item:last-child {
+    border-bottom: none;
+}
+
+/* Form improvements */
+.form-message {
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.form-message.error {
+    background-color: #ffebee;
+    color: #c62828;
+    border: 1px solid #ef9a9a;
+}
+
+.form-message.success {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #a5d6a7;
+}
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--light); /* Changed to match screenshot */
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 1.2rem 0;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .nav-logo i {
+            margin-right: 0.5rem;
+            font-size: 2rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-link {
+            margin: 0 1.2rem;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 1.1rem;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--primary);
+        }
+
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .bar {
+            width: 25px;
+            height: 3px;
+            background-color: var(--dark);
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(120deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 5rem 0 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 20%;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='1' d='M0,224L48,213.3C96,203,192,181,288,160C384,139,480,117,576,122.7C672,128,768,160,864,170.7C960,181,1056,171,1152,165.3C1248,160,1344,160,1392,160L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content {
+            flex: 1;
+            max-width: 600px;
+            padding-right: 2rem;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+            line-height: 1.6;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.2rem;
+            margin-bottom: 3rem;
+        }
+
+        .btn-primary, .btn-secondary {
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-block;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: white;
+            color: var(--primary);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background-color: white;
+            color: var(--primary);
+        }
+
+        .hero-features {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 1.8rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background-color: white;
+            color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.2rem;
+            font-size: 1.8rem;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+        }
+
+        .feature-card p {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 0;
+        }
+
+        .hero-image {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-image svg {
+            max-width: 100%;
+            height: auto;
+            filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.1));
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 3.5rem;
+            color: var(--text-dark);
+            position: relative;
+            font-weight: 700;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 5px;
+            background-color: var(--primary);
+            border-radius: 3px;
+        }
+
+        /* Features */
+        .features {
+            background-color: var(--section-bg);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .feature-card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--light-gray);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.8rem;
+            font-size: 2rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.2rem;
+            color: var(--text-dark);
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            background: linear-gradient(to bottom, #f8fcff, #e8f4ff);
+            position: relative;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+            padding: 2rem;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 1.8rem;
+            box-shadow: 0 5px 15px rgba(44, 125, 177, 0.3);
+        }
+
+        .step h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .step p {
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* Health Tips */
+        .health-tips {
+            background-color: var(--section-bg);
+        }
+
+        .tips-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .tip-card {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s;
+            border: 1px solid var(--light-gray);
+        }
+
+        .tip-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .tip-image {
+            height: 200px;
+            overflow: hidden;
+            background: linear-gradient(120deg, var(--secondary), var(--primary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .tip-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .tip-image svg {
+            width: 80px;
+            height: 80px;
+            color: white;
+            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.2));
+        }
+
+        .tip-content {
+            padding: 2rem;
+        }
+
+        .tip-content h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .tip-content p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .tip-category {
+            display: inline-block;
+            padding: 0.5rem 1.2rem;
+            background-color: var(--light);
+            color: var(--primary);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Call to Action */
+        .cta {
+            background: linear-gradient(120deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            text-align: center;
+            padding: 5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='0.1' d='M0,128L48,117.3C96,107,192,85,288,112C384,139,480,213,576,224C672,235,768,181,864,181.3C960,181,1056,235,1152,234.7C1248,235,1344,181,1392,154.7L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z'%3E%3C/path%3E%3C/svg%3E");
+            background-size: cover;
+            background-position: center;
+        }
+
+        .cta .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--primary-dark);
+            color: white;
+            padding: 4rem 0 1.5rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.8rem;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--accent);
+        }
+
+        .footer-section p {
+            margin-bottom: 1.2rem;
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--accent);
+        }
+
+        .footer-section ul li a i {
+            margin-right: 0.8rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-bottom p {
+            opacity: 0.7;
+        }
+
+        /* Page Content */
+        .page-content {
+            display: none;
+            padding: 2rem 0;
+        }
+
+        .page-content.active {
+            display: block;
+        }
+
+        /* Auth Forms */
+        .auth-container {
+            max-width: 500px;
+            margin: 2rem auto;
+            padding: 2.5rem;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .auth-container h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid var(--light-gray);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+
+        .form-button {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .form-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .auth-link {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        .auth-link a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .auth-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Dashboard */
+        .dashboard-header {
+            background: linear-gradient(120deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 2.5rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .stat-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+
+        .stat-card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .stat-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .stat-card p {
+            color: var(--text-light);
+        }
+
+        .dashboard-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .action-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .action-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .action-card i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .action-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .action-card p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Prediction Form */
+        .prediction-form {
+            background-color: white;
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid var(--light-gray);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* Results */
+        .results-container {
+            background-color: white;
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2.5rem;
+        }
+
+        .result-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .result-header i {
+            font-size: 4rem;
+            color: var(--success);
+            margin-bottom: 1rem;
+        }
+
+        .result-header h2 {
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .result-content {
+            margin-bottom: 2rem;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .result-value {
+            color: var(--text-light);
+        }
+
+        .result-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        /* Loading Spinner */
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            text-align: center;
+            color: var(--gray);
+            padding: 2rem;
+        }
+
+        /* Chat Box Styles */
+        .chat-box {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 350px;
+            height: 500px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: none;
+            flex-direction: column;
+            z-index: 1000;
+            overflow: hidden;
+            border: 1px solid var(--light-gray);
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-header h3 {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+        .chat-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            background-color: #f9f9f9;
+        }
+
+        .chat-message {
+            margin-bottom: 1rem;
+            padding: 0.8rem;
+            border-radius: 10px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+
+        .chat-message.user {
+            background-color: var(--primary);
+            color: white;
+            margin-left: auto;
+            text-align: right;
+        }
+
+        .chat-message.assistant {
+            background-color: white;
+            color: var(--text-dark);
+            border: 1px solid var(--light-gray);
+        }
+
+        .chat-input-area {
+            padding: 1rem;
+            background-color: white;
+            border-top: 1px solid var(--light-gray);
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 1px solid var(--light-gray);
+            border-radius: 8px;
+            font-family: inherit;
+            resize: none;
+        }
+
+        .chat-send {
+            padding: 0.8rem 1.2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .chat-send:hover {
+            transform: translateY(-2px);
+        }
+
+        .chat-send:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .chat-typing {
+            display: none;
+            padding: 0.5rem 1rem;
+            color: var(--text-light);
+            font-style: italic;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 80px;
+                flex-direction: column;
+                background-color: white;
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+                padding: 2rem 0;
+                z-index: 999;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-link {
+                margin: 1.5rem 0;
+                display: block;
+            }
+
+            .nav-toggle {
+                display: flex;
+            }
+
+            .nav-toggle.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+
+            .nav-toggle.active .bar:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+
+            .nav-toggle.active .bar:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+
+            .hero-container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-content {
+                padding-right: 0;
+                margin-bottom: 2rem;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .hero-features {
+                flex-direction: column;
+            }
+
+            .section-title {
+                font-size: 2.2rem;
+            }
+
+            .features-grid,
+            .steps,
+            .tips-container,
+            .dashboard-stats,
+            .dashboard-actions {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .result-actions {
+                flex-direction: column;
+            }
+
+            .chat-box {
+                width: calc(100vw - 40px);
+                height: calc(100vh - 100px);
+                bottom: 10px;
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo" onclick="showPage('home')">
+                <i class="fas fa-heartbeat"></i>
+                <span>Health & Wellness</span>
+            </a>
+            <div class="nav-menu" id="nav-menu">
+                <a href="#" class="nav-link active" onclick="showPage('home')">Home</a>
+                <a href="#" class="nav-link" onclick="showPage('dashboard')">Dashboard</a>
+                <a href="#" class="nav-link" onclick="showPage('about')">About</a>
+                <a href="#" class="nav-link" onclick="showPage('contact')">Contact</a>
+                <a href="#" class="nav-link" onclick="showPage('login')">Login</a>
+            </div>
+            <div class="nav-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <div id="home" class="page-content active">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <h1>Health & Wellness</h1>
+                    <p>Your gateway to a healthier, happier life. Discover personalized health insights and track your wellness journey.</p>
+                    <div class="hero-buttons">
+                        <a href="#" class="btn-primary" onclick="showPage('predict')">Get Started</a>
+                        <a href="#" class="btn-secondary" onclick="showPage('about')">Learn More</a>
+                    </div>
+                    
+                    <div class="hero-features">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-heartbeat"></i>
+                            </div>
+                            <h3>Track Your Health</h3>
+                            <p>Monitor your health metrics and get personalized insights.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <h3>Health Tips</h3>
+                            <p>Explore a variety of health tips and advice to improve your well‑being.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400">
+                        <circle cx="250" cy="200" r="180" fill="#8BC34A" opacity="0.2"/>
+                        <circle cx="250" cy="200" r="150" fill="#4CAF50" opacity="0.3"/>
+                        <path d="M250 100 C150 100, 100 150, 100 250 C100 350, 150 400, 250 400 C350 400, 400 350, 400 250 C400 150, 350 100, 250 100 Z" fill="white"/>
+                        <circle cx="250" cy="200" r="80" fill="#4CAF50" opacity="0.5"/>
+                        <path d="M220 170 L250 140 L280 170 L310 140 L340 170 L310 200 L340 230 L310 260 L280 230 L250 260 L220 230 L190 260 L160 230 L190 200 L160 170 L190 140 L220 170 Z" fill="white"/>
+                        <circle cx="250" cy="200" r="30" fill="#FFC107"/>
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features">
+            <div class="container">
+                <h2 class="section-title">Why Choose Health & Wellness?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3>AI-Powered Predictions</h3>
+                        <p>Our advanced machine learning models provide accurate health predictions based on your inputs.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Secure Data Tracking</h3>
+                        <p>Your health data is encrypted and stored securely, with full privacy controls.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-user-md"></i>
+                        </div>
+                        <h3>Personalized Recommendations</h3>
+                        <p>Get tailored health advice and treatment suggestions based on your unique profile.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-stethoscope"></i>
+                        </div>
+                        <h3>Expert-Backed Insights</h3>
+                        <p>Our algorithms are developed in consultation with medical professionals.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section class="how-it-works">
+            <div class="container">
+                <h2 class="section-title">How It Works</h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>Create Your Profile</h3>
+                        <p>Sign up and provide basic health information to get started.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>Input Your Symptoms</h3>
+                        <p>Describe how you're feeling and any symptoms you're experiencing.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>Get AI Analysis</h3>
+                        <p>Our system analyzes your inputs using advanced machine learning models.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <h3>Receive Recommendations</h3>
+                        <p>Get personalized health insights and actionable recommendations.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Health Tips Section -->
+        <section class="health-tips">
+            <div class="container">
+                <h2 class="section-title">Daily Health Tips</h2>
+                <div class="tips-container" id="tips-container">
+                    <div class="loading-spinner"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section class="cta">
+            <div class="container">
+                <h2>Start Your Wellness Journey Today</h2>
+                <p>Join thousands of users who have taken control of their health with our predictive platform.</p>
+                <a href="#" class="btn-primary" onclick="showPage('signup')">Create Account</a>
+            </div>
+        </section>
+    </div>
+
+    <!-- Login Page -->
+    <div id="login" class="page-content">
+        <div class="container">
+            <div class="auth-container">
+                <h2>Login to Your Account</h2>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-username">Username</label>
+                        <input type="text" id="login-username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <button type="submit" class="form-button">Login</button>
+                </form>
+                <div class="auth-link">
+                    <p>Don't have an account? <a href="#" onclick="showPage('signup')">Sign up here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signup Page -->
+    <div id="signup" class="page-content">
+        <div class="container">
+            <div class="auth-container">
+                <h2>Create Your Account</h2>
+                <form id="signup-form">
+                    <div class="form-group">
+                        <label for="signup-username">Username</label>
+                        <input type="text" id="signup-username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email">Email Address</label>
+                        <input type="email" id="signup-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-confirm">Confirm Password</label>
+                        <input type="password" id="signup-confirm" required>
+                    </div>
+                    <button type="submit" class="form-button">Create Account</button>
+                </form>
+                <div class="auth-link">
+                    <p>Already have an account? <a href="#" onclick="showPage('login')">Login here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   <!-- Dashboard Page -->
+<div id="dashboard" class="page-content">
+    <div class="dashboard-header">
+        <div class="container">
+            <h1>Welcome, <span id="dashboard-username">User</span>!</h1>
+            <p>Here's your health dashboard with personalized insights and recommendations.</p>
+        </div>
+    </div>
+    <div class="container">
+        <div class="dashboard-stats">
+            <div class="stat-card">
+                <i class="fas fa-heartbeat"></i>
+                <h3 id="health-score">85%</h3>
+                <p>Health Score</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-walking"></i>
+                <h3 id="steps-today">7,542</h3>
+                <p>Steps Today</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-glass-whiskey"></i>
+                <h3 id="water-intake">5</h3>
+                <p>Glasses of Water</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-bed"></i>
+                <h3 id="sleep-hours">7h 30m</h3>
+                <p>Sleep Last Night</p>
+            </div>
+        </div>
+        
+        <div class="dashboard-section">
+            <h2>Recent Predictions</h2>
+            <div class="predictions-list" id="predictions-list">
+                <div class="loading-spinner"></div>
+            </div>
+        </div>
+        
+        <div class="dashboard-actions">
+            <div class="action-card">
+                <i class="fas fa-stethoscope"></i>
+                <h3>Health Prediction</h3>
+                <p>Get AI-powered predictions about potential health issues based on your profile.</p>
+                <a href="#" class="btn-primary" onclick="showPage('predict')">Make Prediction</a>
+            </div>
+            <div class="action-card">
+                <i class="fas fa-comments"></i>
+                <h3>AI Health Assistant</h3>
+                <p>Chat with our AI assistant for health advice and wellness tips.</p>
+                <a href="#" class="btn-primary" onclick="toggleChatBox()">Open Chat</a>
+            </div>
+            <div class="action-card">
+                <i class="fas fa-chart-line"></i>
+                <h3>Health Trends</h3>
+                <p>Track your health metrics over time and identify patterns.</p>
+                <a href="#" class="btn-primary" onclick="loadHealthTrends()">View Trends</a>
+            </div>
+            <div class="action-card">
+                <i class="fas fa-book-medical"></i>
+                <h3>Health History</h3>
+                <p>Review your past predictions and health records.</p>
+                <a href="#" class="btn-primary" onclick="loadHealthHistory()">View History</a>
+            </div>
+        </div>
+        
+        <div class="dashboard-section" id="trends-section" style="display: none;">
+            <h2>Health Trends</h2>
+            <div class="chart-container">
+                <canvas id="health-trends-chart"></canvas>
+            </div>
+        </div>
+        
+        <div class="dashboard-section" id="history-section" style="display: none;">
+            <h2>Prediction History</h2>
+            <div class="history-container" id="history-container">
+                <!-- History will be loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+  <!-- Prediction Page -->
+<div id="predict" class="page-content">
+    <div class="container">
+        <h2 class="section-title">Health Prediction</h2>
+        <div class="prediction-form">
+            <form id="prediction-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="age">Age</label>
+                        <input type="number" id="age" name="age" min="1" max="120" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="gender">Gender</label>
+                        <select id="gender" name="gender" required>
+                            <option value="">Select Gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="height_cm">Height (cm)</label>
+                        <input type="number" id="height_cm" name="height_cm" min="50" max="250" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="weight_kg">Weight (kg)</label>
+                        <input type="number" id="weight_kg" name="weight_kg" min="2" max="300" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="systolic_bp">Systolic Blood Pressure</label>
+                        <input type="number" id="systolic_bp" name="systolic_bp" min="70" max="200" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="diastolic_bp">Diastolic Blood Pressure</label>
+                        <input type="number" id="diastolic_bp" name="diastolic_bp" min="40" max="130" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="heart_rate">Heart Rate (bpm)</label>
+                        <input type="number" id="heart_rate" name="heart_rate" min="40" max="200" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="temperature">Temperature (°C)</label>
+                        <input type="number" id="temperature" name="temperature" min="35" max="42" step="0.1" required>
+                    </div>
+                </div>
+                
+                <button type="submit" class="form-button">Get Prediction</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Results Page -->
+<div id="results" class="page-content">
+    <div class="container">
+        <h2 class="section-title">Prediction Results</h2>
+        <div class="results-container">
+            <div class="result-header">
+                <i class="fas fa-check-circle result-icon"></i>
+                <h2>Prediction Complete</h2>
+                <p>Based on your input, our model has generated the following predictions:</p>
+            </div>
+            <div class="result-content">
+                <div class="result-item animated fadeIn">
+                    <span class="result-label">Condition:</span>
+                    <span class="result-value" id="result-condition">Common Cold</span>
+                </div>
+                <div class="result-item animated fadeIn">
+                    <span class="result-label">Recommended Medication:</span>
+                    <span class="result-value" id="result-medication">Antihistamines, Decongestants</span>
+                </div>
+                <div class="result-item animated fadeIn">
+                    <span class="result-label">Dosage:</span>
+                    <span class="result-value" id="result-dosage">As directed on packaging</span>
+                </div>
+            </div>
+            <div class="result-actions">
+                <a href="#" class="btn-primary" onclick="showPage('predict')">Make Another Prediction</a>
+                <a href="#" class="btn-secondary" onclick="showPage('dashboard')">Back to Dashboard</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- About Page -->
+    <div id="about" class="page-content">
+        <div class="container">
+            <h2 class="section-title">About Us</h2>
+            <div class="about-content">
+                <p>Health & Wellness is a cutting-edge platform that combines artificial intelligence with medical expertise to provide personalized health predictions and recommendations. Our mission is to make healthcare more accessible and proactive.</p>
+                <p>Founded in 2020, our team of doctors, data scientists, and software engineers have developed advanced algorithms that analyze health data to identify potential issues before they become serious problems.</p>
+                <p>We believe that everyone deserves access to quality healthcare insights, and our platform is designed to empower individuals to take control of their health journey.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Page -->
+    <div id="contact" class="page-content">
+        <div class="container">
+            <h2 class="section-title">Contact Us</h2>
+            <div class="contact-content">
+                <p>Have questions or need support? Our team is here to help you with any inquiries you may have about our platform or services.</p>
+                <div class="contact-form">
+                    <form id="contact-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contact-name">Your Name</label>
+                                <input type="text" id="contact-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-email">Your Email</label>
+                                <input type="email" id="contact-email" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-subject">Subject</label>
+                            <input type="text" id="contact-subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-message">Your Message</label>
+                            <textarea id="contact-message" required></textarea>
+                        </div>
+                        <button type="submit" class="form-button">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat Box -->
+    <div id="chat-box" class="chat-box">
+        <div class="chat-header">
+            <h3><i class="fas fa-robot"></i> AI Health Assistant</h3>
+            <button class="chat-close" onclick="toggleChatBox()">&times;</button>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+            <div class="chat-message assistant">
+                Hello! I'm your AI health assistant. I can help answer questions about wellness, nutrition, exercise, and general health topics. How can I assist you today?
+            </div>
+        </div>
+        <div class="chat-typing" id="chat-typing">AI is typing...</div>
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" class="chat-input" placeholder="Type your health question here..." maxlength="500">
+            <button id="chat-send" class="chat-send" onclick="sendChatMessage()">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Health & Wellness</h3>
+                    <p>Your partner in health management and disease prediction. We're committed to helping you live a healthier, happier life.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#" onclick="showPage('home')"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="#" onclick="showPage('about')"><i class="fas fa-info-circle"></i> About</a></li>
+                        <li><a href="#" onclick="showPage('contact')"><i class="fas fa-envelope"></i> Contact</a></li>
+                        <li><a href="#" onclick="showPage('login')"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Information</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> 123 Health Street, Wellness City</a></li>
+                        <li><a href="tel:+15551234567"><i class="fas fa-phone"></i> +1 (555) 123-4567</a></li>
+                        <li><a href="mailto:info@healthwellness.com"><i class="fas fa-envelope"></i> info@healthwellness.com</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Health & Wellness. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navMenu = document.getElementById('nav-menu');
+        
+        if (mobileMenu) {
+            mobileMenu.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+                mobileMenu.classList.toggle('active');
+            });
+        }
+
+        // Page navigation
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page-content').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show the selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Load data for dashboard
+            if (pageId === 'dashboard') {
+                loadDashboardData();
+            }
+            
+            // Update active nav link
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('onclick') === `showPage('${pageId}')`) {
+                    link.classList.add('active');
+                }
+            });
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Health Tips API
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchHealthTips();
+        });
+
+        async function fetchHealthTips() {
+            try {
+                const response = await fetch('/api/health-tips');
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch health tips');
+                }
+                
+                const data = await response.json();
+                displayHealthTips(data);
+            } catch (error) {
+                console.error('Error fetching health tips:', error);
+                // Fallback to local tips if API fails
+                displayFallbackTips();
+            }
+        }
+
+        function displayHealthTips(tips) {
+            const tipsContainer = document.getElementById('tips-container');
+            tipsContainer.innerHTML = '';
+            
+            if (tips.length === 0) {
+                displayFallbackTips();
+                return;
+            }
+            
+            // Display up to 4 tips
+            const tipsToShow = tips.slice(0, 4);
+            
+            tipsToShow.forEach(tip => {
+                const tipElement = document.createElement('div');
+                tipElement.className = 'tip-card';
+                
+                tipElement.innerHTML = `
+                    <div class="tip-image">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                            <path d="M50 15 C30 15, 15 30, 15 50 C15 70, 30 85, 50 85 C70 85, 85 70, 85 50 C85 30, 70 15, 50 15 Z" fill="#4CAF50" opacity="0.2"/>
+                            <path d="M50 20 L50 80 M30 50 L70 50" stroke="#4CAF50" stroke-width="5" stroke-linecap="round"/>
+                            <path d="M50 35 L50 65 M35 50 L65 50" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div class="tip-content">
+                        <h3>${tip.title || 'Health Tip'}</h3>
+                        <p>${tip.content || 'Maintain a healthy lifestyle with proper nutrition and exercise.'}</p>
+                        <span class="tip-category">${tip.category || 'Wellness'}</span>
+                    </div>
+                `;
+                tipsContainer.appendChild(tipElement);
+            });
+        }
+
+        function displayFallbackTips() {
+            const tipsContainer = document.getElementById('tips-container');
+            tipsContainer.innerHTML = '';
+            
+            const fallbackTips = [
+                {
+                    title: "Stay Hydrated",
+                    content: "Drink at least 8 glasses of water daily to maintain optimal body function.",
+                    category: "Nutrition"
+                },
+                {
+                    title: "Regular Exercise",
+                    content: "Aim for at least 30 minutes of moderate exercise most days of the week.",
+                    category: "Fitness"
+                },
+                {
+                    title: "Balanced Diet",
+                    content: "Include fruits, vegetables, lean proteins, and whole grains in your daily meals.",
+                    category: "Nutrition"
+                },
+                {
+                    title: "Adequate Sleep",
+                    content: "Most adults need 7-9 hours of quality sleep each night for optimal health.",
+                    category: "Wellness"
+                }
+            ];
+            
+            fallbackTips.forEach(tip => {
+                const tipElement = document.createElement('div');
+                tipElement.className = 'tip-card';
+                
+                let svgContent = '';
+                if (tip.category === "Nutrition") {
+                    svgContent = '<path d="M50 15 C30 15, 15 30, 15 50 C15 70, 30 85, 50 85 C70 85, 85 70, 85 50 C85 30, 70 15, 50 15 Z" fill="#4CAF50" opacity="0.2"/><path d="M50 20 L50 80 M30 50 L70 50" stroke="#4CAF50" stroke-width="5" stroke-linecap="round"/><path d="M50 35 L50 65 M35 50 L65 50" stroke="white" stroke-width="3" stroke-linecap="round"/>';
+                } else if (tip.category === "Fitness") {
+                    svgContent = '<path d="M50 15 C30 15, 15 30, 15 50 C15 70, 30 85, 50 85 C70 85, 85 70, 85 50 C85 30, 70 15, 50 15 Z" fill="#4CAF50" opacity="0.2"/><path d="M30 60 L40 40 L60 30 L70 50 L60 70 L40 75 Z" fill="#4CAF50" opacity="0.5"/><circle cx="50" cy="50" r="10" fill="white"/>';
+                } else {
+                    svgContent = '<path d="M50 15 C30 15, 15 30, 15 50 C15 70, 30 85, 50 85 C70 85, 85 70, 85 50 C85 30, 70 15, 50 15 Z" fill="#4CAF50" opacity="0.2"/><circle cx="50" cy="50" r="25" fill="#4CAF50" opacity="0.5"/><path d="M50 30 L50 50 L65 65" stroke="white" stroke-width="3" stroke-linecap="round" fill="none"/>';
+                }
+                
+                tipElement.innerHTML = `
+                    <div class="tip-image">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                            ${svgContent}
+                        </svg>
+                    </div>
+                    <div class="tip-content">
+                        <h3>${tip.title}</h3>
+                        <p>${tip.content}</p>
+                        <span class="tip-category">${tip.category}</span>
+                    </div>
+                `;
+                tipsContainer.appendChild(tipElement);
+            });
+        }
+
+        // Load dashboard data when the page is shown
+        function loadDashboardData() {
+            // Show loading state
+            document.getElementById('predictions-list').innerHTML = '<div class="loading-spinner"></div>';
+            
+            // Fetch dashboard data from server
+            fetch('/api/dashboard-data')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Update username
+                    document.getElementById('dashboard-username').textContent = data.username || 'User';
+                    
+                    // Update stats
+                    document.getElementById('health-score').textContent = data.health_score + '%';
+                    document.getElementById('steps-today').textContent = data.steps_today.toLocaleString();
+                    document.getElementById('water-intake').textContent = data.water_intake;
+                    document.getElementById('sleep-hours').textContent = data.sleep_hours + 'h';
+                    
+                    // Load recent predictions
+                    loadRecentPredictions(data.recent_predictions);
+                })
+                .catch(error => {
+                    console.error('Error loading dashboard data:', error);
+                    document.getElementById('predictions-list').innerHTML = '<p class="error-message">Could not load dashboard data. Please try again later.</p>';
+                });
+        }
+
+        // Load recent predictions
+        function loadRecentPredictions(predictions) {
+            const container = document.getElementById('predictions-list');
+            container.innerHTML = '';
+            
+            if (!predictions || predictions.length === 0) {
+                container.innerHTML = '<p class="error-message">No predictions yet. Make your first prediction!</p>';
+                return;
+            }
+            
+            predictions.forEach(prediction => {
+                const predictionDate = new Date(prediction.created_at).toLocaleDateString();
+                const item = document.createElement('div');
+                item.className = 'prediction-item animated fadeIn';
+                item.innerHTML = `
+                    <h4>${prediction.prediction || 'Unknown condition'}</h4>
+                    <p>Medication: ${prediction.medication || 'Not specified'} | Dosage: ${prediction.dosage || 'Consult doctor'}</p>
+                    <small>${predictionDate}</small>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        // Load health trends
+        function loadHealthTrends() {
+            // Hide other sections
+            document.getElementById('history-section').style.display = 'none';
+            
+            // Show trends section
+            const trendsSection = document.getElementById('trends-section');
+            trendsSection.style.display = 'block';
+            trendsSection.innerHTML = '<div class="loading-spinner"></div><p>Loading health trends...</p>';
+            
+            // Fetch trends data
+            fetch('/api/health-trends')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    renderHealthTrendsChart(data);
+                })
+                .catch(error => {
+                    console.error('Error loading health trends:', error);
+                    trendsSection.innerHTML = '<p class="error-message">Could not load health trends.</p>';
+                });
+        }
+
+        // Load health history
+        function loadHealthHistory() {
+            // Hide other sections
+            document.getElementById('trends-section').style.display = 'none';
+            
+            // Show history section
+            const historySection = document.getElementById('history-section');
+            historySection.style.display = 'block';
+            historySection.innerHTML = '<div class="loading-spinner"></div><p>Loading health history...</p>';
+            
+            // Fetch history data
+            fetch('/api/health-history')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    renderHealthHistory(data);
+                })
+                .catch(error => {
+                    console.error('Error loading health history:', error);
+                    historySection.innerHTML = '<p class="error-message">Could not load health history.</p>';
+                });
+        }
+
+        // Render health trends chart
+        function renderHealthTrendsChart(data) {
+            const canvas = document.getElementById('health-trends-chart');
+            
+            // Simple placeholder implementation
+            // In a real app, you would use Chart.js or similar library
+            canvas.innerHTML = `
+                <div style="text-align: center; padding: 20px;">
+                    <i class="fas fa-chart-line" style="font-size: 48px; color: #4CAF50; margin-bottom: 15px;"></i>
+                    <h3>Health Trends</h3>
+                    <p>Your health score has improved from ${data.health_scores[0]}% to ${data.health_scores[data.health_scores.length-1]}% over the past ${data.labels.length} months.</p>
+                    <div style="background: linear-gradient(to right, #8BC34A, #4CAF50); height: 20px; border-radius: 10px; margin: 20px 0;"></div>
+                    <p>Continue your healthy habits to maintain this positive trend!</p>
+                </div>
+            `;
+        }
+
+        // Render health history
+        function renderHealthHistory(history) {
+            const container = document.getElementById('history-container');
+            container.innerHTML = '';
+            
+            if (!history || history.length === 0) {
+                container.innerHTML = '<p class="error-message">No health history available.</p>';
+                return;
+            }
+            
+            history.forEach(item => {
+                const historyItem = document.createElement('div');
+                historyItem.className = 'history-item animated fadeIn';
+                historyItem.innerHTML = `
+                    <div>
+                        <h4>${item.prediction || 'Unknown condition'}</h4>
+                        <p>Medication: ${item.medication || 'Not specified'} | Dosage: ${item.dosage || 'Consult doctor'}</p>
+                        <small>${new Date(item.created_at).toLocaleDateString()}</small>
+                    </div>
+                    <div>
+                        <span class="btn-secondary">View Details</span>
+                    </div>
+                `;
+                container.appendChild(historyItem);
+            });
+        }
+
+        // Form submissions with API integration
+        document.getElementById('login-form')?.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+            
+            try {
+                const formData = new FormData();
+                formData.append('username', username);
+                formData.append('password', password);
+                
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (response.redirected) {
+                    window.location.href = response.url;
+                } else if (response.ok) {
+                    const data = await response.json();
+                    if (data.success) {
+                        showPage('dashboard');
+                    } else {
+                        alert('Login failed. Please check your credentials.');
+                    }
+                } else {
+                    alert('Login failed. Please check your credentials.');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                alert('Login failed. Please try again later.');
+            }
+        });
+
+        document.getElementById('signup-form')?.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const username = document.getElementById('signup-username').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const confirmPassword = document.getElementById('signup-confirm').value;
+            
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+            
+            try {
+                const formData = new FormData();
+                formData.append('username', username);
+                formData.append('email', email);
+                formData.append('password', password);
+                formData.append('confirm_password', confirmPassword);
+                
+                const response = await fetch('/signup', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (response.redirected) {
+                    window.location.href = response.url;
+                } else if (response.ok) {
+                    alert('Registration successful! Please login.');
+                    showPage('login');
+                } else {
+                    alert('Registration failed. Please try again.');
+                }
+            } catch (error) {
+                console.error('Registration error:', error);
+                alert('Registration failed. Please try again later.');
+            }
+        });
+
+        document.getElementById('prediction-form')?.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData();
+            formData.append('age', document.getElementById('age').value);
+            formData.append('gender', document.getElementById('gender').value);
+            formData.append('height_cm', document.getElementById('height_cm').value);
+            formData.append('weight_kg', document.getElementById('weight_kg').value);
+            formData.append('systolic_bp', document.getElementById('systolic_bp').value);
+            formData.append('diastolic_bp', document.getElementById('diastolic_bp').value);
+            formData.append('heart_rate', document.getElementById('heart_rate').value);
+            formData.append('temperature', document.getElementById('temperature').value);
+            
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Update the results page with the prediction from the server
+                    document.getElementById('result-condition').textContent = data.prediction;
+                    document.getElementById('result-medication').textContent = data.medication;
+                    document.getElementById('result-dosage').textContent = data.dosage;
+                    showPage('results');
+                } else {
+                    alert('Prediction failed: ' + data.error);
+                }
+            } catch (error) {
+                console.error('Prediction error:', error);
+                alert('Prediction failed. Please try again later.');
+            }
+        });
+
+        document.getElementById('contact-form')?.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData();
+            formData.append('name', document.getElementById('contact-name').value);
+            formData.append('email', document.getElementById('contact-email').value);
+            formData.append('subject', document.getElementById('contact-subject').value);
+            formData.append('message', document.getElementById('contact-message').value);
+            
+            try {
+                const response = await fetch('/contact', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    alert('Thank you for your message! We will get back to you soon.');
+                    showPage('home');
+                } else {
+                    alert('Message sending failed. Please try again.');
+                }
+            } catch (error) {
+                console.error('Contact form error:', error);
+                alert('Message sending failed. Please try again later.');
+            }
+        });
+
+        // Chat functionality
+        function toggleChatBox() {
+            const chatBox = document.getElementById('chat-box');
+            const isVisible = chatBox.style.display === 'flex';
+
+            if (isVisible) {
+                chatBox.style.display = 'none';
+            } else {
+                chatBox.style.display = 'flex';
+                // Scroll to bottom of chat
+                setTimeout(() => {
+                    const messagesContainer = document.getElementById('chat-messages');
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                }, 100);
+            }
+        }
+
+        async function sendChatMessage() {
+            const input = document.getElementById('chat-input');
+            const sendButton = document.getElementById('chat-send');
+            const typingIndicator = document.getElementById('chat-typing');
+            const messagesContainer = document.getElementById('chat-messages');
+
+            const message = input.value.trim();
+            if (!message) return;
+
+            // Disable input and button
+            input.disabled = true;
+            sendButton.disabled = true;
+
+            // Add user message to chat
+            const userMessageDiv = document.createElement('div');
+            userMessageDiv.className = 'chat-message user';
+            userMessageDiv.textContent = message;
+            messagesContainer.appendChild(userMessageDiv);
+
+            // Clear input
+            input.value = '';
+
+            // Show typing indicator
+            typingIndicator.style.display = 'block';
+
+            // Scroll to bottom
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            try {
+                // Send message to local API (fallback while n8n is not active)
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: message,
+                        user_id: 'guest' // For anonymous access
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Hide typing indicator
+                    typingIndicator.style.display = 'none';
+
+                    // Add AI response to chat
+                    const aiMessageDiv = document.createElement('div');
+                    aiMessageDiv.className = 'chat-message assistant';
+                    aiMessageDiv.textContent = data.response;
+                    messagesContainer.appendChild(aiMessageDiv);
+
+                    // Scroll to bottom
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                } else {
+                    throw new Error(data.error || 'Failed to get response');
+                }
+            } catch (error) {
+                console.error('Chat error:', error);
+                typingIndicator.style.display = 'none';
+
+                // Add error message
+                const errorMessageDiv = document.createElement('div');
+                errorMessageDiv.className = 'chat-message assistant';
+                errorMessageDiv.textContent = 'Sorry, I encountered an error. Please try again later.';
+                errorMessageDiv.style.color = '#f44336';
+                messagesContainer.appendChild(errorMessageDiv);
+
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            } finally {
+                // Re-enable input and button
+                input.disabled = false;
+                sendButton.disabled = false;
+                input.focus();
+            }
+        }
+
+        // Handle Enter key in chat input
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatInput = document.getElementById('chat-input');
+            if (chatInput) {
+                chatInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        sendChatMessage();
+                    }
+                });
+            }
+
+            // Observe when results page becomes active
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                        if (mutation.target.id === 'results' && mutation.target.classList.contains('active')) {
+                            // Add animations to result items
+                            const resultItems = document.querySelectorAll('.result-item');
+                            resultItems.forEach((item, index) => {
+                                item.classList.add('animated', 'fadeIn');
+                                item.style.animationDelay = `${index * 0.3}s`;
+                            });
+                        }
+                    }
+                });
+            });
+
+            // Start observing the results element
+            const resultsElement = document.getElementById('results');
+            if (resultsElement) {
+                observer.observe(resultsElement, { attributes: true });
+            }
+        });
+    </script>
+</body>
+</html>
