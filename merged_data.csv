@@ -1,0 +1,21 @@
+patient_id,name,gender,age,blood_pressure,heart_rate,temperature,oxygen_saturation,weight,height,bmi,smoking_status,alcohol_consumption,exercise_frequency,disease,medication_name,dosage,medication_id,condition_id,treatment_duration_days
+1,John Doe,Male,45,120/80,72,98.6,98,180,70,26.1,Non-smoker,Moderate,Regular,Hypertension,Lisinopril,10mg,101,201,30
+2,Jane Smith,Female,32,110/70,68,98.4,99,140,65,23.4,Never smoked,Low,Occasional,Diabetes,Metformin,500mg,102,202,60
+3,Michael Johnson,Male,58,130/85,75,99.0,97,200,72,27.3,Former smoker,High,Rarely,Heart Disease,Aspirin,81mg,103,203,90
+4,Emily Davis,Female,29,115/75,70,98.2,100,130,63,23.0,Never smoked,Moderate,Regular,Migraine,Sumatriptan,50mg,104,204,15
+5,David Wilson,Male,41,125/82,74,98.8,98,175,68,26.7,Current smoker,High,Regular,Chronic Pain,Oxycodone,5mg,105,205,45
+6,Sarah Brown,Female,36,118/78,69,98.5,99,150,66,24.2,Non-smoker,Low,Regular,Anxiety,Sertraline,50mg,106,206,180
+7,Robert Lee,Male,52,135/90,78,99.2,96,190,71,26.6,Former smoker,Moderate,Occasional,Depression,Escitalopram,10mg,107,207,120
+8,Lisa Garcia,Female,27,112/72,66,98.1,100,125,62,22.8,Never smoked,Low,Regular,Thyroid Disorder,Levothyroxine,50mcg,108,208,365
+9,James Miller,Male,63,140/95,80,99.5,95,210,73,27.8,Current smoker,High,Rarely,COPD,Albuterol,90mcg,109,209,30
+10,Maria Rodriguez,Female,34,117/76,71,98.7,98,145,64,24.9,Non-smoker,Moderate,Regular,Asthma,Fluticasone,110mcg,110,210,60
+11,William Martinez,Male,47,128/84,73,98.9,97,185,69,27.4,Former smoker,High,Regular,Arthritis,Ibuprofen,400mg,111,211,90
+12,Jennifer Anderson,Female,31,114/74,67,98.3,99,135,63,23.9,Never smoked,Low,Occasional,Allergies,Loratadine,10mg,112,212,30
+13,Christopher Taylor,Male,39,122/79,70,98.6,98,170,67,26.3,Non-smoker,Moderate,Regular,Gastroesophageal Reflux Disease,Omeprazole,20mg,113,213,60
+14,Amanda Thomas,Female,44,126/83,72,98.8,97,155,65,25.8,Former smoker,Moderate,Regular,Osteoporosis,Alendronate,70mg,114,214,365
+15,Daniel Jackson,Male,55,132/87,76,99.1,96,195,70,27.9,Current smoker,High,Rarely,Prostate Cancer,Finasteride,5mg,115,215,180
+16,Patricia White,Female,28,113/73,68,98.4,99,130,62,23.5,Never smoked,Low,Regular,Contraception,Ethinyl Estradiol,30mcg,116,216,30
+17,Matthew Harris,Male,42,124/81,71,98.7,98,175,68,26.7,Non-smoker,High,Regular,High Cholesterol,Atorvastatin,20mg,117,217,90
+18,Barbara Clark,Female,37,119/77,69,98.5,98,150,66,24.2,Former smoker,Moderate,Occasional,Sleep Apnea,Modafinil,100mg,118,218,60
+19,Anthony Lewis,Male,49,129/85,74,98.9,97,180,69,26.9,Current smoker,High,Regular,Liver Disease,Ursodiol,300mg,119,219,120
+20,Laura Robinson,Female,33,116/75,70,98.6,99,140,64,24.2,Non-smoker,Low,Regular,Epilepsy,Levetiracetam,500mg,120,220,180
